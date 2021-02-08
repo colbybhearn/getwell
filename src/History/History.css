@@ -1,0 +1,12 @@
+
+.tableWrapper{
+    display:inline-block;
+}
+
+.complete{
+    background:lightgreen
+}
+
+.incomplete{
+    background:lightsalmon
+}

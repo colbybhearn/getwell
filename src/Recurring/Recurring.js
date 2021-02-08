@@ -21,21 +21,38 @@ function Recurring() {
       Schedule <br />
 
         <table>
+            <tbody>
             <tr>
-                <td><input type='checkbox' />Before</td>
+                <td>Before</td>
+                <td></td>
+                <td>After</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Waking Up</td>
+                <td><input type='checkbox' /></td>
+            </tr>
+            <tr>
+                <td><input type='checkbox' /></td>
                 <td>Breakfast</td>
-                <td><input type='checkbox' />After</td>
+                <td><input type='checkbox' /></td>
             </tr>
             <tr>
-            <td><input type='checkbox' />Before</td>
+            <td><input type='checkbox' /></td>
                 <td>Lunch</td>
-                <td><input type='checkbox' />After</td>
+                <td><input type='checkbox' /></td>
             </tr>
             <tr>
-            <td><input type='checkbox' />Before</td>
+            <td><input type='checkbox' /></td>
                 <td>Dinner</td>
-                <td><input type='checkbox' />After</td>
+                <td><input type='checkbox' /></td>
             </tr>
+            <tr>
+                <td><input type='checkbox' /></td>
+                <td>Bedtime</td>
+                <td></td>
+            </tr>
+            </tbody>
         </table>
 
         <button >Add</button>

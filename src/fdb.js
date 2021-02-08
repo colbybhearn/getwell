@@ -4,38 +4,29 @@ import faunadb from 'faunadb'
 export default class fdb {
 
 
-    static async getRecurrings(){
+    static runFql(fql){
         let client = new faunadb.Client({
             secret: 'fnAEBb0_KBACAEsoLp3-p-MFbA_JYlXns2OKKnjy'
           })
+        return client.query(fql);
+    }
 
-        const q = faunadb.query
-        const { Documents, Paginate, Collection, Lambda, Get, Var, Map} = q
-        let allRecurring = Paginate(Documents(Collection('Recurring')));
-        const recurring = Map(allRecurring, 
+    static async getRecurrings(){
+        const { Documents, Paginate, Collection, Lambda, Get, Var, Map} = faunadb.query
+        const recurring = Map(
+            Paginate(Documents(Collection('Recurring'))), 
             Lambda(['ref'], Get(Var('ref')))
             )
-
-        return client.query(recurring); 
+        return this.runFql(recurring);
     }
     
 
-    static async getHistory(){
-        let client = new faunadb.Client({
-            secret: 'fnAEBb0_KBACAEsoLp3-p-MFbA_JYlXns2OKKnjy'
-          })
-
-        const q = faunadb.query
-        const { Documents, Paginate, Collection, Lambda, Get, Var, Map} = q
-        let allHistory = Paginate(Documents(Collection('History')));
-        const history = Map(allHistory, 
+    static async getHistory(){        
+        const { Documents, Paginate, Collection, Lambda, Get, Var, Map} = faunadb.query
+        const history = Map(
+            Paginate(Documents(Collection('History'))), 
             Lambda(['ref'], Get(Var('ref')))
             )
-        /*
-            client.query(history).then((resp)=>{
-            console.log(resp);
-        });*/
-
-        return client.query(history); 
+        return this.runFql(history);
     }
 }

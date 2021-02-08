@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component';
 import fdb from '../fdb.js'
+import './History.css';
 
 function History() {
 
@@ -12,7 +13,8 @@ function History() {
       }]);
 
     useEffect(async () => {
-        console.log('did mount');
+        
+        //console.log('did mount');
         // code to run on component mount
 
         let cols = 
@@ -35,7 +37,7 @@ function History() {
                         name: entry.data.name,
                         selector: entry.data.name,
                         sortable: false,
-                        cell: row => <div>{row.ursodiol === true? 'yes':'no'}</div>
+                        cell: (row,index,column) => <div className={row[column.selector]? 'complete':'incomplete'}>{row[column.selector]? 'yes':'no'} </div>
                     }
                 )
             })
@@ -68,23 +70,18 @@ function History() {
                     newRec
                 )
             })
-            console.log(recs);
+            //console.log(recs);
             setData(recs);
         })
 
-        /*
-        setData([
-            { date: '2021.02.06', '6mp': true, ursodiol: true }
-        ]);*/
+       
         //fetch data from the database here and call setData
-
-
     
       },[])// essentially onComponentDidMount
 
     
     return (
-        <div>
+        <div className="tableWrapper">
             <DataTable
                 title="History"
                 columns={columns}
