@@ -17,10 +17,22 @@ function History() {
 
         //fnAEBb0_KBACAEsoLp3-p-MFbA_JYlXns2OKKnjy
         let history = fdb.getHistory();
+        history.then((resp)=>{
+            let recs = [];
+            resp.data.forEach((entry) => {
+                console.log("Entry:", entry);
+                recs.push(
+                    {date: entry.data.date}
+                )
+            })
+            console.log(recs);
+            setData(recs)
+        })
 
+        /*
         setData([
             { date: '2021.02.06', '6mp': true, ursodiol: true }
-        ]);
+        ]);*/
         //fetch data from the database here and call setData
 
         setColumns([
