@@ -4,6 +4,20 @@ import faunadb from 'faunadb'
 export default class fdb {
 
 
+    static async getRecurrings(){
+        let client = new faunadb.Client({
+            secret: 'fnAEBb0_KBACAEsoLp3-p-MFbA_JYlXns2OKKnjy'
+          })
+
+        const q = faunadb.query
+        const { Documents, Paginate, Collection, Lambda, Get, Var, Map} = q
+        let allRecurring = Paginate(Documents(Collection('Recurring')));
+        const recurring = Map(allRecurring, 
+            Lambda(['ref'], Get(Var('ref')))
+            )
+
+        return client.query(recurring); 
+    }
     
 
     static async getHistory(){

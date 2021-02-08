@@ -15,18 +15,61 @@ function History() {
         console.log('did mount');
         // code to run on component mount
 
+        let cols = 
+            [
+                {
+                  name: 'Date',
+                  selector: 'date',
+                  sortable: true,
+                }
+            ];
+
+        let recurrings = fdb.getRecurrings();
+        recurrings.then((resp)=>{
+            
+            //console.log(resp);
+            resp.data.forEach((entry) => {
+                //console.log("Entry:", entry);
+                cols.push(
+                    {
+                        name: entry.data.name,
+                        selector: entry.data.name,
+                        sortable: false,
+                        cell: row => <div>{row.ursodiol === true? 'yes':'no'}</div>
+                    }
+                )
+            })
+
+            setColumns(cols);
+
+        });
+
         //fnAEBb0_KBACAEsoLp3-p-MFbA_JYlXns2OKKnjy
         let history = fdb.getHistory();
         history.then((resp)=>{
             let recs = [];
             resp.data.forEach((entry) => {
-                console.log("Entry:", entry);
+                //console.log("Entry:", entry);
+
+                let newRec = {
+                    date: entry.data.date                    
+                }
+
+                cols.forEach((col)=>{
+                    //console.log('col: ',col)
+                    if(col.selector === 'date')
+                        return;
+                    newRec[col.selector] = entry.data.recurrings.includes(col.selector)
+                });
+
+                //console.log(newRec);
+
                 recs.push(
-                    {date: entry.data.date}
+                    newRec
                 )
             })
             console.log(recs);
-            setData(recs)
+            setData(recs);
         })
 
         /*
@@ -35,25 +78,7 @@ function History() {
         ]);*/
         //fetch data from the database here and call setData
 
-        setColumns([
-              {
-                name: 'Date',
-                selector: 'date',
-                sortable: true,
-              },
-              {
-                name: 'Ursodiol',
-                selector: 'ursodiol',
-                sortable: false,
-                cell: row => <div >good</div>,
-              },      
-              {
-                name: '6MP',
-                selector: '6mp',
-                sortable: false,
-                cell: row => <div >good</div>,
-              },
-            ])
+
     
       },[])// essentially onComponentDidMount
 
